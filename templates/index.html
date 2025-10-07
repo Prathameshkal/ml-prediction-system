@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Frost Console Ultimate - ML Prediction System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="blob blob4"></div>
+  
+  <div class="ai-dashboard">
+    <aside class="sidebar">
+      <h2>🤖 AI Console</h2>
+      <a href="#" class="nav-link active" data-page="dashboard">📊 Dashboard</a>
+      <a href="#" class="nav-link" data-page="ml-prediction">🤖 ML Predictions</a>
+      <a href="#" class="nav-link" data-page="ml-results">📊 ML Results</a>
+      <a href="#" class="nav-link" data-page="ai-control">📡 AI Control</a>
+      <a href="#" class="nav-link" data-page="models">🧩 Models</a>
+      <a href="#" class="nav-link" data-page="data-sets">📁 Data Sets</a>
+      <a href="#" class="nav-link" data-page="analytics">🔍 Analytics</a>
+      <div class="divider"></div>
+      <a href="#" class="nav-link" data-page="settings">⚙️ Settings</a>
+      <a href="#" class="nav-link" data-page="support">🛟 Support</a>
+      <a href="#" class="nav-link" data-page="documentation">📚 Documentation</a>
+    </aside>
+    
+    <section class="main">
+      <header>
+        <h1 id="page-title">Welcome, Operator</h1>
+        <div class="header-controls">
+          <div class="user-profile">
+            <div class="user-avatar">OP</div>
+            <div>
+              <div>Alex Morgan</div>
+              <div style="font-size: 0.8rem; opacity: 0.7;">Senior Operator</div>
+            </div>
+          </div>
+          <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+          <button onclick="refreshData()">🔄 Refresh</button>
+          <button onclick="showNotifications()">🔔 <span id="notificationCount">3</span></button>
+        </div>
+      </header>
+
+      <!-- Dashboard Page -->
+      <div id="dashboard" class="page active">
+        <div class="cards">
+          <div class="card fade-in">
+            <div class="card-icon">🧠</div>
+            <h3>AI Models</h3>
+            <div class="value">7 Active</div>
+            <div class="trend up">↑ 2 new today</div>
+          </div>
+          <div class="card fade-in" style="animation-delay: 0.1s">
+            <div class="card-icon">📈</div>
+            <h3>Inference Rate</h3>
+            <div class="value">92%</div>
+            <div class="trend up">↑ 3% from yesterday</div>
+          </div>
+          <div class="card fade-in" style="animation-delay: 0.2s">
+            <div class="card-icon">🌐</div>
+            <h3>Data Sources</h3>
+            <div class="value">35 Connected</div>
+            <div class="trend down">↓ 2 issues</div>
+          </div>
+          <div class="card fade-in" style="animation-delay: 0.3s">
+            <div class="card-icon">💾</div>
+            <h3>Memory Usage</h3>
+            <div class="value">64%</div>
+            <div class="trend up">↑ 8% this hour</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="chart-container fade-in">
+            <div class="chart-header">
+              <h2>AI Performance Metrics</h2>
+              <div class="chart-actions">
+                <button onclick="changeChartType('hourly')">Hourly</button>
+                <button onclick="changeChartType('daily')" class="active">Daily</button>
+                <button onclick="changeChartType('weekly')">Weekly</button>
+              </div>
+            </div>
+            <div class="chart">
+              <div class="chart-grid" id="chartGrid"></div>
+              <div class="chart-line" id="performanceChart"></div>
+            </div>
+          </div>
+          
+          <div class="chart-container fade-in" style="animation-delay: 0.2s">
+            <div class="chart-header">
+              <h2>System Status</h2>
+            </div>
+            <div class="system-status">
+              <div class="status-item">
+                <div class="status-indicator online pulse"></div>
+                <div>Core AI</div>
+              </div>
+              <div class="status-item">
+                <div class="status-indicator online"></div>
+                <div>Data Pipeline</div>
+              </div>
+              <div class="status-item">
+                <div class="status-indicator warning"></div>
+                <div>Storage</div>
+              </div>
+              <div class="status-item">
+                <div class="status-indicator online"></div>
+                <div>API Gateway</div>
+              </div>
+              <div class="status-item">
+                <div class="status-indicator online"></div>
+                <div>Security</div>
+              </div>
+              <div class="status-item">
+                <div class="status-indicator offline"></div>
+                <div>Backup System</div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 25px;">
+              <h3>Recent Activity</h3>
+              <div class="log-console" id="activityLog">
+                <div class="log-entry">
+                  <div class="log-time">14:23:05</div>
+                  <div class="log-message info">Model training completed</div>
+                </div>
+                <div class="log-entry">
+                  <div class="log-time">14:15:32</div>
+                  <div class="log-message warning">High memory usage detected</div>
+                </div>
+                <div class="log-entry">
+                  <div class="log-time">14:10:11</div>
+                  <div class="log-message success">Data sync successful</div>
+                </div>
+                <div class="log-entry">
+                  <div class="log-time">14:05:47</div>
+                  <div class="log-message error">Backup system offline</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-input fade-in" style="animation-delay: 0.4s">
+          <input type="text" placeholder="Ask AI Assistant... (e.g., 'Show performance metrics for model X')" id="aiInput" />
+          <button onclick="sendAIMessage()">▶ Send</button>
+        </div>
+
+        <div class="log-console fade-in" style="animation-delay: 0.5s" id="logConsole">
+          <div class="log-entry">
+            <div class="log-time">14:30:01</div>
+            <div class="log-message info">System initialized successfully</div>
+          </div>
+          <div class="log-entry">
+            <div class="log-time">14:30:05</div>
+            <div class="log-message info">All services running normally</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ML Prediction Page -->
+      <div id="ml-prediction" class="page">
+        <!-- System Status Panel -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2>📊 System Status & Limits</h2>
+            <button onclick="checkSystemStatus()">🔄 Refresh</button>
+          </div>
+          <div id="systemStatus" class="system-status-panel">
+            <div class="status-item">
+              <div class="status-label">Max Upload Size</div>
+              <div class="status-value">100MB</div>
+            </div>
+            <div class="status-item">
+              <div class="status-label">Max Rows</div>
+              <div class="status-value">1,000,000</div>
+            </div>
+            <div class="status-item">
+              <div class="status-label">Current Memory</div>
+              <div class="status-value" id="currentMemory">--</div>
+            </div>
+            <div class="status-item">
+              <div class="status-label">Active Trainings</div>
+              <div class="status-value" id="activeTrainings">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Sample Datasets Section -->
+          <div class="chart-container">
+            <div class="chart-header">
+              <h2>📊 Sample Datasets</h2>
+              <p>Try with these real-world datasets</p>
+            </div>
+            <div class="sample-datasets-grid">
+              <div class="dataset-card" onclick="loadSampleDataset('titanic')">
+                <h4>🚢 Titanic Survival</h4>
+                <p>Predict passenger survival</p>
+                <div class="dataset-badge classification">Classification</div>
+              </div>
+              <div class="dataset-card" onclick="loadSampleDataset('housing')">
+                <h4>🏠 Housing Prices</h4>
+                <p>Predict house prices</p>
+                <div class="dataset-badge regression">Regression</div>
+              </div>
+              <div class="dataset-card" onclick="loadSampleDataset('churn')">
+                <h4>📞 Customer Churn</h4>
+                <p>Predict customer churn</p>
+                <div class="dataset-badge classification">Classification</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Upload Section -->
+          <div class="chart-container">
+            <div class="chart-header">
+              <h2>📁 Upload Your Dataset</h2>
+            </div>
+            <div class="upload-section">
+              <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📤</div>
+                <h3>Drag & Drop your CSV file</h3>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                <button onclick="document.getElementById('fileInput').click()">Browse Files</button>
+              </div>
+              <div id="uploadProgress" style="display: none;">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">Processing...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Analysis Section -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2>🔍 Data Analysis</h2>
+            <button onclick="analyzeData()" id="analyzeBtn" disabled>Run Analysis</button>
+          </div>
+          <div id="analysisResults" class="analysis-results">
+            <p>Upload a dataset to see analysis results</p>
+          </div>
+        </div>
+
+        <!-- Model Training Section -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2>🧠 Model Training</h2>
+          </div>
+          <div class="training-controls">
+            <div class="control-group">
+              <label for="targetColumn">Target Column:</label>
+              <select id="targetColumn" disabled>
+                <option value="">Select target column</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="modelType">Model Type:</label>
+              <select id="modelType">
+                <option value="random_forest">Random Forest</option>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="svm">Support Vector Machine</option>
+              </select>
+            </div>
+            <button onclick="trainModel()" id="trainBtn" disabled>Train Model</button>
+          </div>
+          <div id="trainingResults" class="training-results"></div>
+        </div>
+
+        <!-- Prediction Section -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2>🔮 Make Predictions</h2>
+          </div>
+          <div class="prediction-controls">
+            <div id="predictionInputs"></div>
+            <button onclick="makePrediction()" id="predictBtn" disabled>Predict</button>
+          </div>
+          <div id="predictionResults" class="prediction-results"></div>
+        </div>
+      </div>
+
+
+<!-- ✅ YEH NAYA PAGE ADD KARO: Results Page -->
+<div id="ml-results" class="page">
+  <div class="results-container">
+    <!-- Results Header -->
+    <div class="results-header fade-in">
+      <h2>🎯 Prediction Analysis Complete</h2>
+      <p>Your machine learning model has been trained and predictions have been generated</p>
+      <div class="data-summary">
+        <div class="summary-item">
+          <div class="summary-value" id="modelAccuracy">--%</div>
+          <div class="summary-label">Model Accuracy</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-value" id="dataSize">--</div>
+          <div class="summary-label">Dataset Size</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-value" id="featureCount">--</div>
+          <div class="summary-label">Features Used</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-value" id="predictionCount">--</div>
+          <div class="summary-label">Predictions Made</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Results Grid -->
+    <div class="results-grid">
+      <!-- Model Performance -->
+      <div class="result-card model-performance fade-in" style="animation-delay: 0.1s">
+        <h3>📊 Model Performance</h3>
+        <div class="performance-metrics" id="performanceMetrics">
+          <!-- Metrics will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Feature Importance -->
+      <div class="result-card fade-in" style="animation-delay: 0.2s">
+        <h3>🔍 Feature Importance</h3>
+        <div class="feature-importance" id="featureImportance">
+          <!-- Feature importance bars will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Prediction Results -->
+      <div class="result-card fade-in" style="animation-delay: 0.3s">
+        <h3>🎯 Prediction Results</h3>
+        <div class="prediction-result">
+          <div class="prediction-value" id="finalPrediction">--</div>
+          <div class="confidence-score" id="confidenceScore">Confidence: --%</div>
+          <p id="predictionExplanation">Based on the trained model analysis</p>
+        </div>
+      </div>
+      
+      <!-- Data Insights -->
+      <div class="result-card fade-in" style="animation-delay: 0.4s">
+        <h3>💡 Data Insights</h3>
+        <div id="dataInsights">
+          <!-- Insights will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="action-buttons fade-in" style="animation-delay: 0.5s">
+      <button class="btn btn-primary" onclick="downloadResults()">
+        📥 Download Results
+      </button>
+      <button class="btn btn-secondary" onclick="showPage('ml-prediction')">
+        🔄 New Prediction
+      </button>
+      <button class="btn btn-secondary" onclick="exportModel()">
+        💾 Export Model
+      </button>
+      <button class="btn btn-secondary" onclick="shareResults()">
+        📤 Share Results
+      </button>
+    </div>
+  </div>
+</div>
+      </div>
+
+      <!-- Other pages (AI Control, Models, Data Sets, Analytics, Settings, Support, Documentation) -->
+      <!-- These remain the same as in your original code -->
+      <div id="ai-control" class="page">
+        <!-- AI Control Page Content -->
+      </div>
+      <div id="models" class="page">
+        <!-- Models Page Content -->
+      </div>
+      <div id="data-sets" class="page">
+        <!-- Data Sets Page Content -->
+      </div>
+      <div id="analytics" class="page">
+        <!-- Analytics Page Content -->
+      </div>
+      <div id="settings" class="page">
+        <!-- Settings Page Content -->
+      </div>
+      <div id="support" class="page">
+        <!-- Support Page Content -->
+      </div>
+      <div id="documentation" class="page">
+        <!-- Documentation Page Content -->
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/js/dashboard.js"></script>
+  <script src="/static/js/ml-prediction.js"></script
+</body>
+</html>
